@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'monitoring.middleware.UserMonitoring',
 ]
 
 ROOT_URLCONF = 'testapp.urls'
@@ -81,6 +82,29 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+LOGGING={
+    "version":1,
+    "disable-exiting_loggers":False,
+    "formatters":{
+        "verbose":{"format":"[%(levelname)s %(asctime)s %(message]s"},
+        "simple":{"format":"[%(levelname)s %(asctime)s]"}
+    },
+    "handlers":{
+        "console":{
+            "class":"logging.StreamHandler",
+            # "stream":sys.out,
+            "formatter":"verbose"
+
+        }
+    },
+    "logger":{
+        "root":{
+            "handlers":["console"],
+            "level":"INFO"
+        }
+    },
+}
+
 
 
 # Password validation
